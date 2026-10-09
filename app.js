@@ -5,14 +5,8 @@ const brl = n => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" 
 const pad2 = n => String(n).padStart(2, "0");
 const byId = id => PADROES.find(p => p.id === id);
 
-/* ---------- Tema, menu, progresso ---------- */
+/* ---------- Menu, progresso, faixa ---------- */
 (function () {
-  const root = document.documentElement;
-  try { const t = localStorage.getItem("dp-theme"); if (t) root.dataset.theme = t; } catch (e) {}
-  $("#btnTheme").onclick = () => {
-    root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
-    try { localStorage.setItem("dp-theme", root.dataset.theme); } catch (e) {}
-  };
   $("#btnBurger").onclick = () => $("#menu").classList.toggle("open");
   $$("#menu a").forEach(a => a.addEventListener("click", () => $("#menu").classList.remove("open")));
 
@@ -34,6 +28,25 @@ const byId = id => PADROES.find(p => p.id === id);
     const t = setInterval(() => { n++; el.textContent = n; if (n >= to) clearInterval(t); }, 700 / to);
   });
 })();
+
+(function () {
+  const one = PADROES.map(p => `<span>${p.nome}</span>`).join("");
+  $("#tickerTrack").innerHTML = one + one + one + one;
+})();
+
+/* ---------- Carrosséis ---------- */
+window.initCarousels = function () {
+  $$(".car").forEach(c => {
+    if (c.dataset.ok) return; c.dataset.ok = 1;
+    const t = $(".car-track", c);
+    c.insertAdjacentHTML("beforeend", '<button class="car-btn prev" aria-label="Anterior">‹</button><button class="car-btn next" aria-label="Próximo">›</button>');
+    const prev = $(".prev", c), next = $(".next", c);
+    const upd = () => { prev.disabled = t.scrollLeft < 8; next.disabled = t.scrollLeft + t.clientWidth >= t.scrollWidth - 8; };
+    prev.onclick = () => t.scrollBy({ left: -t.clientWidth * .8, behavior: "smooth" });
+    next.onclick = () => t.scrollBy({ left: t.clientWidth * .8, behavior: "smooth" });
+    t.addEventListener("scroll", upd, { passive: true }); addEventListener("resize", upd); upd();
+  });
+};
 
 /* ---------- Modo apresentação ---------- */
 (function () {
@@ -92,6 +105,7 @@ $("#viesGrid").innerHTML = VIESES.map((v, i) => `
   <article class="vies rv"><div class="num">${String(i + 1).padStart(2, "0")}</div><h3>${v.nome}</h3><p>${v.desc}</p>
   ${v.usado.map(u => `<span class="tag">${u}</span>`).join("")}</article>`).join("");
 observeReveal($("#viesGrid"));
+initCarousels();
 
 /* ---------- Galeria ---------- */
 (function () {
@@ -110,17 +124,15 @@ observeReveal($("#viesGrid"));
       (!q || (p.nome + p.en + p.resumo + p.como + p.exemplo).toLowerCase().includes(q)));
     gal.innerHTML = list.map(p => `
       <button class="gcard" data-id="${p.id}" style="--c:${CATEGORIAS[p.cat].cor}">
-        <span class="cat">${CATEGORIAS[p.cat].nome}</span>
-        <span class="num">${String(p.n + 1).padStart(2, "0")}</span>
+        <div class="th"><div class="th-bg"></div><span class="num">${String(p.n + 1).padStart(2, "0")}</span>${THUMBS[p.id]}</div>
+        <div class="body"><span class="cat">${CATEGORIAS[p.cat].nome}</span>
         <h3>${p.nome}</h3><small>${p.en}</small>
-        <p>${p.resumo}</p><span class="more">Ver detalhes →</span>
+        <p>${p.resumo}</p><span class="more">Ver detalhes</span></div>
       </button>`).join("");
     $("#galEmpty").hidden = list.length > 0;
   }
   gal.onclick = e => { const c = e.target.closest(".gcard"); if (c) openDialog(c.dataset.id); };
   draw();
-  $("#taxo").innerHTML = Object.entries(CATEGORIAS).map(([k, c]) => `<div class="tx" style="--c:${c.cor}"><h4><span>${c.nome}</span><span>${PADROES.filter(p => p.cat === k).length}</span></h4>${PADROES.filter(p => p.cat === k).map(p => `<button data-id="${p.id}">${p.nome}</button>`).join("")}</div>`).join("");
-  $("#taxo").onclick = e => { const b = e.target.closest("button"); if (b) openDialog(b.dataset.id); };
 
   const dlg = $("#dlg");
   $("#dlgX").onclick = () => dlg.close();
@@ -129,8 +141,8 @@ observeReveal($("#viesGrid"));
   window.openDialog = id => {
     const p = byId(id), c = CATEGORIAS[p.cat];
     $("#dlgBody").innerHTML = `
-      <div class="dh" style="--c:${c.cor}"><span class="num" style="color:${c.cor}">${String(PADROES.indexOf(p) + 1).padStart(2, "0")}</span>
-        <div><h3 id="dlgTitle">${p.nome}</h3><small>${p.en} · ${c.nome}</small></div></div>
+      <div class="dlg-th" style="--c:${c.cor}"><div class="th"><div class="th-bg"></div><span class="num">${String(PADROES.indexOf(p) + 1).padStart(2, "0")}</span>${THUMBS[p.id]}</div></div>
+      <div class="dbody"><div class="dh"><h3 id="dlgTitle">${p.nome}</h3><small>${p.en} · ${c.nome}</small></div>
       <div class="dl" style="--c:${c.cor}">
         <div><b>Como funciona</b><p>${p.como}</p></div>
         <div><b>Viés explorado</b><p>${p.vies}</p></div>
@@ -138,7 +150,7 @@ observeReveal($("#viesGrid"));
         <div class="jur"><b>Implicação jurídica</b><p>${p.juridico}</p></div>
         <div><b>Exemplo</b><p>${p.exemplo}</p></div>
       </div>
-      ${p.demo ? `<p style="margin:18px 0 0"><button class="btn" id="goDemo">Ver demonstração interativa →</button></p>` : ""}`;
+      ${p.demo ? `<p style="margin:22px 0 0"><button class="btn dk" id="goDemo">Ver demonstração interativa →</button></p>` : ""}</div>`;
     if (p.demo) $("#goDemo").onclick = () => { dlg.close(); selectDemo(p.demo); $("#demos").scrollIntoView({ behavior: "smooth" }); };
     dlg.showModal();
   };
@@ -511,3 +523,7 @@ mountDemo();
   $("#huntReset").onclick = render;
   render();
 })();
+
+/* ---------- Casos reais ---------- */
+$("#casos").innerHTML = CASOS.map(c => `<article class="case"><span class="k">${c.k}</span><h3>${c.nome}</h3><span class="v">${c.v}</span><p>${c.txt}</p><div>${c.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div><small>Fonte: ${c.fonte}</small></article>`).join("");
+initCarousels();

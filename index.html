@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="light">
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -10,7 +10,7 @@
 <body>
 
 <header class="topbar">
-  <a class="brand" href="#inicio"><span class="brand-mark">DP</span>Dark Patterns</a>
+  <a class="brand" href="#inicio">Dark <b>Patterns</b></a>
   <nav class="menu" id="menu">
     <a href="#o-que-e">Conceito</a>
     <a href="#vieses">Vieses</a>
@@ -23,7 +23,6 @@
   </nav>
   <div class="tools">
     <button class="btn-ghost" id="btnPres" title="Atalho: tecla P">Modo apresentação</button>
-    <button class="btn-ghost" id="btnTheme" aria-label="Alternar tema claro/escuro">Tema</button>
     <button class="btn-ghost burger" id="btnBurger" aria-label="Menu">Menu</button>
   </div>
 </header>
@@ -36,18 +35,12 @@
   <div class="wrap">
     <div>
       <p class="eyebrow">Faculdades Integradas de Taquara · Sistemas de Informação</p>
-      <h1>Interfaces que <em>enganam</em>. Direitos que <em>importam</em>.</h1>
+      <h1>Interfaces que <em>enganam</em> as pessoas para que façam o que não pretendiam.</h1>
       <p class="lead">Identificação e classificação de <strong>dark patterns</strong> em interfaces de serviços digitais: manipulação do usuário e implicações jurídicas.</p>
       <div class="hero-cta">
         <a class="btn" href="#galeria">Explorar a galeria</a>
         <a class="btn btn-alt" href="#demos">Ver demonstrações</a>
       </div>
-      <ul class="stats">
-        <li><b data-count="15">0</b><span>padrões catalogados</span></li>
-        <li><b data-count="6">0</b><span>demonstrações</span></li>
-        <li><b data-count="8">0</b><span>vieses cognitivos</span></li>
-        <li><b data-count="2">0</b><span>leis: LGPD e CDC</span></li>
-      </ul>
       <p class="byline">Kauã Rafael Dapper Andrade · Caio Arruda · Igor Oliveira Fiorio<br><span>Orientador: Prof. Dr. Luís Antônio Licks Missel Machado</span></p>
     </div>
     <aside>
@@ -60,18 +53,29 @@
         <span class="mk mk1">1</span><span class="mk mk2">2</span>
       </div>
       <ul class="hero-legend">
-        <li><b>1</b> Aceitar: botão enorme e colorido, 1 clique.</li>
-        <li><b>2</b> Recusar: link cinza de 10 px, sem opção “Rejeitar”.</li>
+        <li><b>1</b> &nbsp;Aceitar: botão enorme e colorido, 1 clique.</li>
+        <li><b>2</b> &nbsp;Recusar: link cinza de 10 px, sem opção “Rejeitar”.</li>
       </ul>
     </aside>
   </div>
+</section>
+
+<div class="ticker" aria-hidden="true"><div id="tickerTrack"></div></div>
+
+<section class="band" data-title="Em números">
+  <ul class="stats">
+    <li><b data-count="15">0</b><span>padrões catalogados</span></li>
+    <li><b data-count="6">0</b><span>demonstrações interativas</span></li>
+    <li><b data-count="8">0</b><span>vieses cognitivos</span></li>
+    <li><b data-count="2">0</b><span>leis principais: LGPD e CDC</span></li>
+  </ul>
 </section>
 
 <!-- ============ CONCEITO ============ -->
 <section id="o-que-e" data-title="Conceito">
   <div class="wrap">
     <p class="eyebrow rv">01 · Conceito</p>
-    <h2 class="rv">O que são dark patterns?</h2>
+    <h2 class="rv">O que são dark patterns</h2>
     <p class="lead rv">Dark patterns (padrões obscuros, ou <em>deceptive design</em>) são escolhas de design em interfaces que <strong>levam o usuário a tomar decisões que ele não tomaria</strong> se tivesse informação clara e liberdade de escolha, em benefício do negócio e não dele.</p>
 
     <div class="grid3">
@@ -116,9 +120,9 @@
 <section id="vieses" class="alt" data-title="Vieses cognitivos">
   <div class="wrap">
     <p class="eyebrow rv">02 · Psicologia</p>
-    <h2 class="rv">Por que funcionam? Vieses cognitivos</h2>
+    <h2 class="rv">Por que funcionam: vieses cognitivos</h2>
     <p class="lead rv">Dark patterns não exploram “falhas” do usuário: exploram <strong>atalhos mentais normais</strong> do cérebro humano. Referência: Rian Dutra, <em>Enviesados</em> (2022).</p>
-    <div class="grid4" id="viesGrid"></div>
+    <div class="car"><div class="car-track" id="viesGrid"></div></div>
   </div>
 </section>
 
@@ -126,9 +130,8 @@
 <section id="galeria" data-title="Galeria de padrões">
   <div class="wrap">
     <p class="eyebrow rv">03 · Produto: galeria digital</p>
-    <h2 class="rv">Galeria de padrões</h2>
+    <h2 class="rv">Tipos de dark pattern</h2>
     <p class="lead rv">Cada padrão tem categoria, funcionamento, viés explorado, efeito no usuário e implicação jurídica. Clique em um cartão para ver os detalhes.</p>
-    <div class="taxo rv" id="taxo"></div>
     <div class="filters" id="filters"></div>
     <input class="search" id="search" type="search" placeholder="Buscar padrão (ex.: cancelar, urgência, cookies)" aria-label="Buscar padrão">
     <div class="gallery" id="gallery"></div>
@@ -169,7 +172,7 @@
       <aside class="notes">
         <h4>Progresso</h4>
         <div class="score"><span class="big" id="huntN">0/7</span><div class="meter"><i id="huntBar"></i></div></div>
-        <ul class="found-list" id="huntList"><li style="border-color:var(--line)"><span>Nenhum padrão encontrado ainda.</span></li></ul>
+        <ul class="found-list" id="huntList"></ul>
         <div class="hunt-actions">
           <button class="btn-ghost" id="huntHint">Dica</button>
           <button class="btn-ghost" id="huntAll">Revelar todos</button>
@@ -191,6 +194,9 @@
     <div class="callout rv">
       A manipulação compromete o <em>consentimento</em> (LGPD) e a <em>informação adequada</em> (CDC). Se o aceite do usuário é produto do design e não da vontade, ele pode ser considerado viciado ou nulo.
     </div>
+
+    <h3 class="sub rv">Casos e orientações reais</h3>
+    <div class="car"><div class="car-track" id="casos"></div></div>
   </div>
 </section>
 
@@ -205,7 +211,7 @@
 </section>
 
 <!-- ============ PESQUISA ============ -->
-<section id="pesquisa" class="alt" data-title="Pesquisa">
+<section id="pesquisa" class="blk" data-title="Pesquisa">
   <div class="wrap">
     <p class="eyebrow rv">08 · Método e resultados</p>
     <h2 class="rv">Sobre a pesquisa</h2>
@@ -264,6 +270,7 @@
 </div>
 
 <script src="data.js"></script>
+<script src="thumbs.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
