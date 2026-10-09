@@ -527,3 +527,56 @@ mountDemo();
 /* ---------- Casos reais ---------- */
 $("#casos").innerHTML = CASOS.map(c => `<article class="case"><span class="k">${c.k}</span><h3>${c.nome}</h3><span class="v">${c.v}</span><p>${c.txt}</p><div>${c.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div><small>Fonte: ${c.fonte}</small></article>`).join("");
 initCarousels();
+
+/* ---------- Jurisdições: caso real + onde incide ---------- */
+(function () {
+  const J = { br: "Brasil", ue: "União Europeia", us: "Estados Unidos" };
+  const LV = { 2: ["l2", "Norma específica"], 1: ["l1", "Norma geral"], 0: ["l0", "Sem previsão direta"] };
+  let ci = 0, jur = "br", found = new Set(), cur = null;
+  const stage = $("#jxStage"), panel = $("#jxPanel");
+
+  $("#jxTabs").innerHTML = JX_CASOS.map((c, i) => `<button class="dtab${i ? "" : " on"}" data-i="${i}">${c.titulo}</button>`).join("");
+  $("#jxTabs").onclick = e => { const b = e.target.closest(".dtab"); if (b) { ci = +b.dataset.i; load(); } };
+  $("#jxSwitch").onclick = e => {
+    const b = e.target.closest("button"); if (!b) return;
+    jur = b.dataset.j; $$("#jxSwitch button").forEach(x => x.classList.toggle("on", x === b)); drawPanel();
+  };
+  $("#jxAll").onclick = () => { JX_CASOS[ci].spots.forEach((_, i) => found.add(i)); cur = cur ?? 0; refresh(); };
+  $("#jxReset").onclick = () => load();
+
+  function load() {
+    const c = JX_CASOS[ci]; found = new Set(); cur = null;
+    $$("#jxTabs .dtab").forEach((t, i) => t.classList.toggle("on", i === ci));
+    $("#jxCase").innerHTML = `<b>${c.ref}.</b> ${c.resumo}<small>Reconstrução ilustrativa de interface, feita para fins didáticos.</small>`;
+    stage.innerHTML = c.build();
+    refresh();
+  }
+  stage.onclick = e => {
+    const h = e.target.closest(".hs"); if (!h) return;
+    e.preventDefault(); cur = +h.dataset.i; found.add(cur); refresh();
+  };
+  function refresh() {
+    $$(".hs", stage).forEach(h => h.classList.toggle("found", found.has(+h.dataset.i)));
+    drawPanel(); drawMatrix();
+  }
+  function drawPanel() {
+    const c = JX_CASOS[ci];
+    if (cur === null) {
+      panel.className = "notes";
+      panel.innerHTML = `<h4>Clique na interface</h4><p class="note" style="color:#bdbab0">Há <b>${c.spots.length} pontos</b> com possível problema jurídico. Encontre-os e compare o tratamento em cada jurisdição.</p><div class="metric"><div><b>0/${c.spots.length}</b><span>pontos encontrados</span></div></div>`;
+      return;
+    }
+    const s = c.spots[cur];
+    panel.innerHTML = `<span class="tag jx-pat">${s.pat}</span><h4>${s.nome}</h4>
+      ${["br", "ue", "us"].map(k => { const d = s[k], l = LV[d.n]; return `<div class="jr${k === jur ? " on" : ""}"><div class="h"><b>${J[k]}</b><span class="lv ${l[0]}">${l[1]}</span></div><span class="nm">${d.norma}</span>${d.txt}</div>`; }).join("")}
+      <div class="metric"><div><b>${found.size}/${c.spots.length}</b><span>pontos encontrados</span></div></div>`;
+  }
+  function drawMatrix() {
+    const c = JX_CASOS[ci];
+    $("#jxMatrix").innerHTML = `<table><thead><tr><th>Ponto da interface</th><th>Brasil</th><th>União Europeia</th><th>Estados Unidos</th></tr></thead><tbody>${c.spots.map((s, i) => {
+      if (!found.has(i)) return `<tr><td class="q">Ponto ${i + 1} (ainda não encontrado)</td><td class="q">?</td><td class="q">?</td><td class="q">?</td></tr>`;
+      return `<tr><td><b>${s.nome}</b><br><span class="tag">${s.pat}</span></td>${["br", "ue", "us"].map(k => { const l = LV[s[k].n]; return `<td><span class="lv ${l[0]}">${l[1]}</span></td>`; }).join("")}</tr>`;
+    }).join("")}</tbody></table>`;
+  }
+  load();
+})();

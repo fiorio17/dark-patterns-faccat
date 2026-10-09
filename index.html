@@ -18,6 +18,7 @@
     <a href="#demos">Demonstrações</a>
     <a href="#cacada">Desafio</a>
     <a href="#juridico">Jurídico</a>
+    <a href="#jurisdicoes">Jurisdições</a>
     <a href="#quiz">Quiz</a>
     <a href="#pesquisa">Pesquisa</a>
   </nav>
@@ -200,10 +201,39 @@
   </div>
 </section>
 
+<!-- ============ JURISDIÇÕES ============ -->
+<section id="jurisdicoes" class="blk" data-title="Jurisdições">
+  <div class="wrap">
+    <p class="eyebrow rv">07 · Casos reais</p>
+    <h2 class="rv">Onde isso incide, em cada país?</h2>
+    <p class="lead rv">Escolha um caso real, <strong>clique nos pontos da interface que você acha problemáticos</strong> e veja como Brasil, União Europeia e Estados Unidos tratam cada um. As telas são reconstruções ilustrativas, não capturas oficiais.</p>
+    <div class="demo-tabs" id="jxTabs"></div>
+    <div class="jx-case rv" id="jxCase"></div>
+    <div class="demo-head">
+      <div class="switch jx-sw" id="jxSwitch" role="group" aria-label="Jurisdição em destaque">
+        <button data-j="br" class="on">Brasil</button>
+        <button data-j="ue">União Europeia</button>
+        <button data-j="us">Estados Unidos</button>
+      </div>
+      <div>
+        <button class="btn-ghost" id="jxAll">Revelar todos</button>
+        <button class="btn-ghost" id="jxReset">Reiniciar</button>
+      </div>
+    </div>
+    <div class="demo-grid">
+      <div class="stage" id="jxStage"></div>
+      <aside class="notes" id="jxPanel"></aside>
+    </div>
+    <h3 class="sub rv">Mapa de cobertura</h3>
+    <p class="lead rv">A cada ponto identificado, o quadro mostra se a jurisdição tem norma específica, apenas norma geral ou nenhuma previsão direta.</p>
+    <div class="jx-mx rv" id="jxMatrix"></div>
+  </div>
+</section>
+
 <!-- ============ QUIZ ============ -->
 <section id="quiz" data-title="Quiz">
   <div class="wrap narrow">
-    <p class="eyebrow rv">07 · Participe</p>
+    <p class="eyebrow rv">08 · Participe</p>
     <h2 class="rv">Você consegue identificar?</h2>
     <p class="lead rv">Leia a situação e escolha qual dark pattern está em jogo.</p>
     <div class="card quiz rv" id="quizBox"></div>
@@ -213,7 +243,7 @@
 <!-- ============ PESQUISA ============ -->
 <section id="pesquisa" class="blk" data-title="Pesquisa">
   <div class="wrap">
-    <p class="eyebrow rv">08 · Método e resultados</p>
+    <p class="eyebrow rv">09 · Método e resultados</p>
     <h2 class="rv">Sobre a pesquisa</h2>
     <div class="grid2">
       <article class="card rv">
@@ -271,6 +301,7 @@
 
 <script src="data.js"></script>
 <script src="thumbs.js"></script>
+<script src="juris.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

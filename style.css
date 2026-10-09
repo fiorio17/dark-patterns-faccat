@@ -390,3 +390,31 @@ body.pres .band{display:none}
   .dbody{padding:22px}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+
+/* jurisdições */
+.jx-case{background:#111;border:1px solid #2a2a2a;border-left:5px solid var(--y);border-radius:10px;padding:18px 22px;margin:4px 0 22px;font-size:.9rem;color:#d4d1c6}
+.jx-case b{color:#fff}.jx-case small{display:block;margin-top:6px;color:#8d8a80;font:500 .72rem var(--ui)}
+.jx-sw{background:#111;border-color:#444}
+.jx-sw button{color:#bdbab0}
+.jx-sw button.on{background:var(--y);color:#000}
+.blk .btn-ghost{background:transparent;color:#fff;border-color:#444}
+.blk .btn-ghost:hover{border-color:var(--y);color:var(--y)}
+.blk .dtab{background:transparent;color:#fff;border-color:#555}
+.blk .dtab:hover{background:#222}
+.blk .dtab.on{background:var(--y);color:#000;border-color:var(--y)}
+.blk .notes{background:#111;border-color:#2a2a2a;color:#d4d1c6}
+.blk .notes h4{color:#fff}
+.blk .notes ul,.blk .notes .law{color:#bdbab0}
+.jr{border:1px solid #2a2a2a;border-radius:10px;padding:12px 14px;margin:8px 0;opacity:.55;transition:.25s;font-size:.82rem;line-height:1.6}
+.jr.on{opacity:1;border-color:var(--y);background:#1a1a14}
+.jr .h{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+.jr .h b{font:700 .66rem var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--y)}
+.jr .nm{display:block;font-weight:700;color:#fff;font-size:.82rem}
+.lv{font:700 .6rem var(--ui);padding:2px 8px;border-radius:99px;letter-spacing:.04em;white-space:nowrap}
+.lv.l2{background:var(--y);color:#000}.lv.l1{background:#555;color:#fff}.lv.l0{border:1px solid #666;color:#999}
+.jx-pat{display:inline-block;margin-bottom:6px}
+.jx-mx{overflow-x:auto}
+.jx-mx table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:560px}
+.jx-mx th{font:700 .66rem var(--ui);text-transform:uppercase;letter-spacing:.12em;color:var(--y);text-align:left;padding:10px 12px;border-bottom:1px solid #333}
+.jx-mx td{padding:12px;border-bottom:1px solid #222;color:#d4d1c6;vertical-align:middle}
+.jx-mx td.q{color:#555;font-style:italic}
