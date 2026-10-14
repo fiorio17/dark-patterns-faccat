@@ -50,31 +50,56 @@ window.initCarousels = function () {
 
 /* ---------- Modo apresentação ---------- */
 (function () {
-  const secs = $$("main > section");
   const bar = $("#presBar");
+  const HEAD = 56;                       // altura da barra superior
+  let tgt = null, tgtAt = 0;             // destino de uma rolagem suave em andamento
+  const secs = () => $$("main > section").filter(s => s.offsetHeight > 0);   // ignora seções ocultas
+  const topOf = s => s.getBoundingClientRect().top + scrollY - HEAD;
   const cur = () => {
-    let best = 0, d = Infinity;
-    secs.forEach((s, i) => { const v = Math.abs(s.getBoundingClientRect().top - 56); if (v < d) { d = v; best = i; } });
-    return best;
+    const l = secs();
+    if (scrollY < 4) return 0;
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) return l.length - 1;
+    let idx = 0;
+    l.forEach((s, i) => { if (s.getBoundingClientRect().top <= HEAD + 24) idx = i; });
+    return idx;
   };
-  const label = () => { const i = cur(); $("#pTitle").textContent = `${i + 1} / ${secs.length} · ${secs[i].dataset.title || ""}`; };
-  const go = i => { secs[Math.max(0, Math.min(secs.length - 1, i))].scrollIntoView({ behavior: "smooth" }); };
+  const base = () => (tgt !== null && performance.now() - tgtAt < 900) ? tgt : cur();
+  const go = (i, smooth = true) => {
+    const l = secs(); i = Math.max(0, Math.min(l.length - 1, i));
+    tgt = i; tgtAt = performance.now();
+    if (!bar.hidden) label(i);
+    scrollTo({ top: Math.max(0, topOf(l[i])), behavior: smooth ? "smooth" : "auto" });
+  };
+  const label = k => { const l = secs(), i = Math.min(k ?? cur(), l.length - 1); $("#pTitle").textContent = `${i + 1} / ${l.length} · ${l[i].dataset.title || ""}`; };
+  const next = () => go(base() + 1);
+  const prev = () => {
+    const i = base(), l = secs();
+    // se já rolou bem para dentro da seção, volta primeiro ao início dela
+    if (tgt === null || performance.now() - tgtAt >= 900) { if (scrollY - topOf(l[i]) > 140) { go(i); return; } }
+    go(i - 1);
+  };
   const toggle = () => {
+    const i = cur();
     document.body.classList.toggle("pres");
     const on = document.body.classList.contains("pres");
     bar.hidden = !on;
     $("#btnPres").textContent = on ? "Sair da apresentação" : "Modo apresentação";
-    if (on) { label(); setTimeout(() => go(cur()), 50); }
+    tgt = null;
+    setTimeout(() => { go(i, false); if (on) label(); }, 60);
   };
   $("#btnPres").onclick = toggle; $("#pExit").onclick = toggle;
-  $("#pPrev").onclick = () => go(cur() - 1); $("#pNext").onclick = () => go(cur() + 1);
+  $("#pPrev").onclick = prev; $("#pNext").onclick = next;
   addEventListener("scroll", () => { if (!bar.hidden) label(); }, { passive: true });
+  addEventListener("resize", () => { if (!bar.hidden) label(); });
+  ["wheel", "touchstart", "mousedown"].forEach(ev => addEventListener(ev, e => { if (!e.target.closest("#presBar")) tgt = null; }, { passive: true }));
   addEventListener("keydown", e => {
     if (e.target.closest("input,textarea,select") || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key.toLowerCase() === "p") { toggle(); return; }
     if (!document.body.classList.contains("pres") || $("#dlg").open) return;
-    if (e.key === "ArrowRight" || e.key === "PageDown") { e.preventDefault(); go(cur() + 1); }
-    if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); go(cur() - 1); }
+    if (e.key === "ArrowRight" || e.key === "PageDown") { e.preventDefault(); next(); }
+    if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); prev(); }
+    if (e.key === "Home") { e.preventDefault(); go(0); }
+    if (e.key === "End") { e.preventDefault(); go(secs().length - 1); }
     if (e.key === "Escape") toggle();
   });
 })();
