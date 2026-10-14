@@ -173,7 +173,7 @@ const VIESES = [
 
 const LEIS = {
   lgpd: {
-    titulo: "LGPD — Lei nº 13.709/2018",
+    titulo: "LGPD — Lei nº 13.709/2018", url: "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
     intro: "O foco é o consentimento e a transparência no tratamento de dados pessoais. Dark patterns que obtêm aceite sem escolha real tornam o consentimento questionável.",
     itens: [
       { art: "Art. 5º, XII", txt: "Consentimento é a manifestação livre, informada e inequívoca do titular.", pad: ["Pré-seleção", "Confirmshaming", "Insistência"] },
@@ -186,7 +186,7 @@ const LEIS = {
     ]
   },
   cdc: {
-    titulo: "CDC — Lei nº 8.078/1990",
+    titulo: "CDC — Lei nº 8.078/1990", url: "https://www.planalto.gov.br/ccivil_03/leis/l8078compilado.htm",
     intro: "O foco é a relação de consumo: o consumidor é vulnerável e tem direito à informação clara e à proteção contra práticas abusivas.",
     itens: [
       { art: "Art. 6º, III e IV", txt: "Direito à informação adequada e clara e à proteção contra publicidade enganosa e abusiva.", pad: ["Falsa escassez", "Custos ocultos"] },
@@ -202,11 +202,11 @@ const LEIS = {
     titulo: "Outras normas e referências",
     intro: "O tema também é regulado em outras frentes, no Brasil e no exterior.",
     itens: [
-      { art: "Decreto 7.962/2013", txt: "Regulamenta o comércio eletrônico: informações claras sobre preço total, canal de atendimento facilitado e arrependimento.", pad: ["Custos ocultos", "Difícil de cancelar"] },
-      { art: "Marco Civil da Internet", txt: "Lei 12.965/2014, art. 7º, VIII e IX: consentimento expresso e destacado para coleta e uso de dados.", pad: ["Privacy Zuckering"] },
-      { art: "Guia de Cookies (ANPD)", txt: "Orientações sobre banners: rejeitar deve ser tão fácil quanto aceitar; não usar pré-marcação nem design que induza.", pad: ["Interferência visual", "Pré-seleção"] },
-      { art: "DSA (União Europeia)", txt: "Regulamento (UE) 2022/2065, art. 25: proíbe interfaces de plataformas online que enganem ou manipulem usuários.", pad: [] },
-      { art: "FTC (EUA)", txt: "Relatório “Bringing Dark Patterns to Light” (2022) e ações contra empresas por assinaturas difíceis de cancelar.", pad: ["Difícil de cancelar"] }
+      { url: "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2013/decreto/d7962.htm", art: "Decreto 7.962/2013", txt: "Regulamenta o comércio eletrônico: informações claras sobre preço total, canal de atendimento facilitado e arrependimento.", pad: ["Custos ocultos", "Difícil de cancelar"] },
+      { url: "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2014/lei/l12965.htm", art: "Marco Civil da Internet", txt: "Lei 12.965/2014, art. 7º, VIII e IX: consentimento expresso e destacado para coleta e uso de dados.", pad: ["Privacy Zuckering"] },
+      { url: "https://www.gov.br/anpd/pt-br/centrais-de-conteudo/materiais-educativos-e-publicacoes/guia_orientativo_cookies_e_protecao_de_dados_pessoais", art: "Guia de Cookies (ANPD)", txt: "Orientações sobre banners: rejeitar deve ser tão fácil quanto aceitar; não usar pré-marcação nem design que induza.", pad: ["Interferência visual", "Pré-seleção"] },
+      { url: "https://eur-lex.europa.eu/eli/reg/2022/2065/oj", art: "DSA (União Europeia)", txt: "Regulamento (UE) 2022/2065, art. 25: proíbe interfaces de plataformas online que enganem ou manipulem usuários.", pad: [] },
+      { url: "https://www.ftc.gov/reports/bringing-dark-patterns-light", art: "FTC (EUA)", txt: "Relatório “Bringing Dark Patterns to Light” (2022) e ações contra empresas por assinaturas difíceis de cancelar.", pad: ["Difícil de cancelar"] }
     ]
   }
 };

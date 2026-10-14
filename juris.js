@@ -2,8 +2,9 @@
    n: 2 = norma específica ou decisão direta · 1 = norma geral / aplicação indireta · 0 = sem previsão direta */
 const JX_CASOS = [
   {
-    id: "cookies", titulo: "Banner de cookies", ref: "CNIL (França), 2022",
-    resumo: "Em janeiro de 2022 a autoridade francesa multou Google (€ 150 mi) e Facebook (€ 60 mi) porque aceitar cookies exigia 1 clique e recusar exigia vários.",
+    id: "cookies", titulo: "Banner de cookies", ref: "CNIL (França), decisão de 31/12/2021",
+    resumo: "A autoridade francesa multou Google (€ 150 mi) e Facebook (€ 60 mi) porque aceitar cookies exigia 1 clique e recusar exigia vários.",
+    links: [["CNIL: caso Facebook", "https://www.cnil.fr/fr/cookies-cloture-de-linjonction-prononcee-lencontre-de-facebook"], ["CNIL: caso Google", "https://www.cnil.fr/fr/cloture-de-linjonction-prononcee-lencontre-de-google-0"], ["Guia de Cookies da ANPD", "https://www.gov.br/anpd/pt-br/centrais-de-conteudo/materiais-educativos-e-publicacoes/guia_orientativo_cookies_e_protecao_de_dados_pessoais"]],
     spots: [
       { nome: "Botão “ACEITAR TODOS” em destaque", pat: "Interferência visual",
         br: { n: 2, norma: "LGPD art. 8º e Guia de Cookies da ANPD", txt: "Rejeitar deve ser tão simples quanto aceitar; destaque visual desigual compromete a liberdade do consentimento." },
@@ -34,7 +35,8 @@ const JX_CASOS = [
   },
   {
     id: "prime", titulo: "Cancelamento de assinatura", ref: "FTC × Amazon Prime (EUA), 2023",
-    resumo: "A FTC processou a Amazon alegando que o Prime era contratado com poucos cliques, mas cancelar exigia atravessar várias telas com ofertas e confirmações.",
+    resumo: "A FTC processou a Amazon alegando que o Prime era contratado com poucos cliques, mas cancelar exigia atravessar várias telas. Em setembro de 2025 houve acordo de US$ 2,5 bilhões.",
+    links: [["FTC: ação (2023)", "https://www.ftc.gov/news-events/news/press-releases/2023/06/ftc-takes-action-against-amazon-enrolling-consumers-amazon-prime-without-consent-sabotaging-their"], ["FTC: acordo (2025)", "https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-secures-historic-25-billion-settlement-against-amazon"], ["Página do caso", "https://www.ftc.gov/legal-library/browse/cases-proceedings/2123050-amazoncom-inc-rosca-ftc-v"]],
     spots: [
       { nome: "“Manter meu plano” enorme × “cancelar” minúsculo", pat: "Interferência visual",
         br: { n: 1, norma: "CDC art. 6º, III e art. 39, IV", txt: "Prevalecer-se da fraqueza do consumidor e não informar com clareza são práticas vedadas." },
@@ -63,8 +65,42 @@ const JX_CASOS = [
     }
   },
   {
+    id: "adobe", titulo: "Assinatura com taxa escondida", ref: "FTC e DOJ × Adobe (EUA), 2024",
+    resumo: "A FTC alega que o plano “anual pago mensalmente” vinha pré-selecionado, que a multa de cancelamento era escondida e que cancelar exigia várias páginas e atendimentos.",
+    links: [["FTC: comunicado (2024)", "https://www.ftc.gov/news-events/news/press-releases/2024/06/ftc-takes-action-against-adobe-executives-hiding-fees-preventing-consumers-easily-cancelling"], ["Página do caso", "https://www.ftc.gov/legal-library/browse/cases-proceedings/222-3055-adobe-inc-us-v"]],
+    spots: [
+      { nome: "Plano anual já selecionado por padrão", pat: "Pré-seleção",
+        br: { n: 1, norma: "CDC art. 6º, III e art. 46", txt: "O consumidor deve conhecer o conteúdo do contrato; condição desfavorável imposta por padrão pode violar o dever de informação." },
+        ue: { n: 1, norma: "Diretiva 2011/83/UE art. 22", txt: "Opções pré-marcadas que geram pagamento ou obrigação adicional não podem ser impostas ao consumidor." },
+        us: { n: 2, norma: "ROSCA · FTC Act, seção 5", txt: "A ação cita a pré-seleção do plano como forma de levar o usuário a um contrato de um ano." } },
+      { nome: "Taxa de cancelamento em letras miúdas", pat: "Custos ocultos",
+        br: { n: 2, norma: "CDC art. 6º, III e art. 31 · Decreto 7.962/2013 art. 2º", txt: "Preço, encargos e condições devem ser informados de forma clara e destacada antes da contratação." },
+        ue: { n: 2, norma: "Diretiva 2011/83/UE art. 6º", txt: "Informações pré-contratuais devem incluir preço total e condições de rescisão, de forma clara." },
+        us: { n: 2, norma: "ROSCA", txt: "A lei exige divulgar com clareza os termos materiais, incluindo taxas de cancelamento, antes de coletar o pagamento." } },
+      { nome: "Cancelamento em várias páginas", pat: "Difícil de cancelar",
+        br: { n: 1, norma: "CDC art. 39, V e art. 51 · Decreto 11.034/2022", txt: "Etapas excessivas para sair do contrato podem configurar vantagem manifestamente excessiva." },
+        ue: { n: 1, norma: "§ 312k BGB (Alemanha) · Diretiva 2005/29/CE", txt: "Alemanha exige botão de cancelamento claro; no restante da UE aplica-se a regra geral de práticas desleais." },
+        us: { n: 2, norma: "ROSCA", txt: "A lei exige mecanismo simples para interromper cobranças recorrentes." } },
+      { nome: "Chat e telefone que “caem” ao pedir cancelamento", pat: "Obstrução",
+        br: { n: 1, norma: "CDC art. 39, V e art. 51, IV", txt: "Atendimento que impede na prática o exercício do direito pode configurar prática abusiva." },
+        ue: { n: 1, norma: "Diretiva 2005/29/CE · Diretiva 2011/83/UE", txt: "Obstáculos não contratuais ao exercício de direitos podem ser práticas comerciais desleais." },
+        us: { n: 2, norma: "ROSCA · FTC Act, seção 5", txt: "Obstáculos de atendimento foram alegados como parte do fluxo de cancelamento ilícito." } }
+    ],
+    build() {
+      return `<div class="mock"><div class="bar">Criativa Cloud <span>Escolha seu plano</span></div>
+        <div class="hs" data-i="0" style="border:2px solid #1769ff;border-radius:8px;padding:10px;margin-bottom:8px;background:#eef3ff"><b>✔ Anual, pago mensalmente</b><div style="font-size:1.4rem;font-weight:800">R$ 99/mês</div></div>
+        <div style="border:1px solid #ddd;border-radius:8px;padding:10px;margin-bottom:8px"><b>Mensal</b><div style="font-size:1.1rem">R$ 149/mês</div></div>
+        <p class="hs" data-i="1" style="font-size:9px;color:#b5b5b5;display:inline-block">Cancelamento após 14 dias: taxa de 50% das mensalidades restantes.</p>
+        <button class="mbtn blue full" style="margin-top:8px">Continuar</button>
+        <div style="margin-top:14px;border-top:1px dashed #ccc;padding-top:10px;font-size:.85rem"><b>Para cancelar:</b>
+          <p class="hs" data-i="2" style="display:inline-block;margin:6px 0">Conta → Planos → Gerenciar → Cancelar → Motivo → Oferta → Confirmar (7 telas)</p><br>
+          <span class="hs" data-i="3" style="display:inline-block;background:#fff3c4;padding:4px 8px;border-radius:4px">💬 Chat: “A conversa foi encerrada. Tente novamente.”</span></div></div>`;
+    }
+  },
+  {
     id: "epic", titulo: "Compras dentro de jogo", ref: "FTC × Epic Games (EUA), 2022",
-    resumo: "A FTC afirmou que o design do Fortnite levava a cobranças sem intenção do jogador, com botões confusos e compra com um clique. O acordo teve US$ 245 milhões em reembolsos.",
+    resumo: "A FTC afirmou que o design do Fortnite levava a cobranças sem intenção do jogador, com botões confusos e compra com um clique. A ordem final obriga a devolver US$ 245 milhões.",
+    links: [["FTC: ordem final (2023)", "https://www.ftc.gov/news-events/news/press-releases/2023/03/ftc-finalizes-order-requiring-fortnite-maker-epic-games-pay-245-million-tricking-users-making"], ["FTC: anúncio do acordo (2022)", "https://www.ftc.gov/news-events/news/press-releases/2022/12/fortnite-video-game-maker-epic-games-pay-more-half-billion-dollars-over-ftc-allegations"], ["Página do caso", "https://www.ftc.gov/legal-library/browse/cases-proceedings/1923203-epic-games-matter"]],
     spots: [
       { nome: "Botão de compra no mesmo lugar do botão de pré-visualização", pat: "Interferência visual",
         br: { n: 1, norma: "CDC art. 6º, III e art. 39, III", txt: "Cobrança sem manifestação clara de vontade e informação inadequada." },

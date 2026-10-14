@@ -17,9 +17,3 @@ const THUMBS = {
   "privacy-zuckering": `<div class="m"><b>Preferências de privacidade</b><div class="tgs"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="pl r">12 de 12 ativados</span></div>`
 };
 
-const CASOS = [
-  { k: "EUA · FTC · 2022", nome: "Epic Games", v: "US$ 245 mi", txt: "Acordo para devolver valores a consumidores cobrados por botões confusos que permitiam compras com um único clique, no jogo Fortnite.", tags: ["Interferência visual", "Inserção sorrateira"], fonte: "Federal Trade Commission" },
-  { k: "EUA · FTC · 2023", nome: "Amazon Prime", v: "Ação judicial", txt: "A FTC acusou a empresa de inscrever consumidores no Prime com design enganoso e de criar um fluxo de cancelamento deliberadamente trabalhoso.", tags: ["Difícil de cancelar", "Obstrução"], fonte: "Federal Trade Commission" },
-  { k: "França · CNIL · 2022", nome: "Google e Facebook", v: "€ 150 mi / € 60 mi", txt: "Multas porque recusar cookies exigia mais cliques do que aceitá-los, o que invalidava o consentimento.", tags: ["Privacy Zuckering", "Interferência visual"], fonte: "CNIL" },
-  { k: "Brasil · ANPD · 2022", nome: "Guia orientativo de cookies", v: "Orientação", txt: "A ANPD orienta que rejeitar seja tão fácil quanto aceitar e que o design não induza o titular a consentir.", tags: ["Pré-seleção", "Interferência visual"], fonte: "Autoridade Nacional de Proteção de Dados" }
-];

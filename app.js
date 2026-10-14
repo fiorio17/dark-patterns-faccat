@@ -437,8 +437,8 @@ mountDemo();
   tabs.innerHTML = Object.entries(LEIS).map(([k, v], i) => `<button class="dtab${i ? "" : " on"}" data-k="${k}">${v.titulo}</button>`).join("");
   const show = k => {
     const l = LEIS[k];
-    body.innerHTML = `<p class="note" style="max-width:780px">${l.intro}</p><div class="leis">${l.itens.map(i => `
-      <div class="lei"><div class="art">${i.art}</div><div><p>${i.txt}</p>${i.pad.map(p => `<span class="tag">${p}</span>`).join("")}</div></div>`).join("")}</div>`;
+    body.innerHTML = `<p class="note" style="max-width:780px">${l.intro}${l.url ? ` <a href="${l.url}" target="_blank" rel="noopener">Ler o texto oficial ↗</a>` : ""}</p><div class="leis">${l.itens.map(i => `
+      <div class="lei"><div class="art">${i.url ? `<a href="${i.url}" target="_blank" rel="noopener">${i.art} ↗</a>` : i.art}</div><div><p>${i.txt}</p>${i.pad.map(p => `<span class="tag">${p}</span>`).join("")}</div></div>`).join("")}</div>`;
     $$(".dtab", tabs).forEach(t => t.classList.toggle("on", t.dataset.k === k));
   };
   tabs.onclick = e => { const b = e.target.closest(".dtab"); if (b) show(b.dataset.k); };
@@ -524,9 +524,23 @@ mountDemo();
   render();
 })();
 
-/* ---------- Casos reais ---------- */
-$("#casos").innerHTML = CASOS.map(c => `<article class="case"><span class="k">${c.k}</span><h3>${c.nome}</h3><span class="v">${c.v}</span><p>${c.txt}</p><div>${c.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div><small>Fonte: ${c.fonte}</small></article>`).join("");
-initCarousels();
+/* ---------- Casos, decisões e documentos oficiais ---------- */
+(function () {
+  const NJ = { todos: "Todos", br: "Brasil", ue: "União Europeia", us: "Estados Unidos" };
+  let f = "todos";
+  const draw = () => {
+    $("#casos").innerHTML = CASOS.filter(c => f === "todos" || c.j === f).map(c => `<article class="case">
+      <span class="k">${c.k}</span><h3><a class="stretch" href="${c.url}" target="_blank" rel="noopener">${c.nome}</a></h3>
+      <span class="v">${c.v}</span><p>${c.txt}</p>
+      <div>${c.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+      <div class="src"><span>Fonte: ${c.fonte}</span><span class="go">Abrir documento oficial ↗</span></div>
+      ${c.extra.length ? `<div class="more-l">${c.extra.map(e => `<a href="${e[1]}" target="_blank" rel="noopener">${e[0]} ↗</a>`).join("")}</div>` : ""}</article>`).join("");
+    const t = $("#casos"); t.scrollLeft = 0; t.dispatchEvent(new Event("scroll"));
+  };
+  $("#casoFilters").innerHTML = Object.entries(NJ).map(([k, n]) => `<button class="chip${k === "todos" ? " on" : ""}" data-k="${k}">${n} (${k === "todos" ? CASOS.length : CASOS.filter(c => c.j === k).length})</button>`).join("");
+  $("#casoFilters").onclick = e => { const b = e.target.closest(".chip"); if (!b) return; f = b.dataset.k; $$(".chip", $("#casoFilters")).forEach(c => c.classList.toggle("on", c === b)); draw(); };
+  draw(); initCarousels();
+})();
 
 /* ---------- Jurisdições: caso real + onde incide ---------- */
 (function () {
@@ -547,7 +561,7 @@ initCarousels();
   function load() {
     const c = JX_CASOS[ci]; found = new Set(); cur = null;
     $$("#jxTabs .dtab").forEach((t, i) => t.classList.toggle("on", i === ci));
-    $("#jxCase").innerHTML = `<b>${c.ref}.</b> ${c.resumo}<small>Reconstrução ilustrativa de interface, feita para fins didáticos.</small>`;
+    $("#jxCase").innerHTML = `<b>${c.ref}.</b> ${c.resumo}<div class="jx-links">${(c.links || []).map(l => `<a href="${l[1]}" target="_blank" rel="noopener">${l[0]} ↗</a>`).join("")}</div><small>Reconstrução ilustrativa de interface, feita para fins didáticos.</small>`;
     stage.innerHTML = c.build();
     refresh();
   }
